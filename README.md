@@ -55,7 +55,7 @@ Setelah selesai, saya push ulang project agar ```README.md``` ikut tersimpan di 
 
 # "Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara ```urls.py```, ```views.py```, ```models.py```, dan berkas ```html```."
 
-![hi](https://miro.medium.com/0*sKcHbUZUKssndJKp)
+![Django R-R Model](https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fcdn.hashnode.com%2Fres%2Fhashnode%2Fimage%2Fupload%2Fv1619466042369%2Fb3LAaF7TO.png)
 
 ### alur request–response pada web aplikasi Django (secara sederhana, sesuai pemahaman saya):
 ### 1. Client (Browser/User)
