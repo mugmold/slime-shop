@@ -29,7 +29,12 @@ SECRET_KEY = 'django-insecure-v&n8c8h49tfn7@$bkb_oreq-u1_36q!c&6zot$0%)ju9g5%tn#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "bermulya-anugrah-slimeshop.pbp.cs.ui.ac.id"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1",
+                 "bermulya-anugrah-slimeshop.pbp.cs.ui.ac.id"]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://bermulya-anugrah-slimeshop.pbp.cs.ui.ac.id"
+]
 
 PRODUCTION = os.getenv('PRODUCTION', 'False').lower() == 'true'
 
@@ -61,7 +66,7 @@ ROOT_URLCONF = 'slime_shop.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

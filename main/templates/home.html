@@ -1,4 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
 <h1>Welcome to Slime Shop!</h1>
 
 <p>Owner : {{ name }}</p>
 <p>Class : {{ class }}</p>
+
+<a href="{% url 'main:create_product' %}">
+    <button>+ Add Product</button>
+</a>
+
+<br>
+
+{% if not product_list %}
+<p>Belum ada product yang dijual di toko ini D:</p>
+{% else %}
+
+{% for product in product_list %}
+<div>
+    {% if forloop.counter > 1 %}
+    <div style="width: 25%; border-top: 2px dashed gray; margin: 20px 0;"></div>
+    {% endif %}
+    <h2><a href="{% url 'main:show_product' product.id %}">{{ product.name }}</a></h2>
+    <h3>Price : {{ product.price }}</h3>
+    <h3>Stock : {{ product.stock }}</h3>
+
+    <p><b>{{ product.category }}</b>
+        {% if product.is_featured %} | <b>Featured!</b> {% endif %}
+    </p>
+
+    {% if product.thumbnail %}
+    <img src="{{ product.thumbnail }}" alt="thumbnail" width="150" height="100">
+    {% endif %}
+
+    <p><a href="{% url 'main:show_product' product.id %}"><button>Read More</button></a></p>
+</div>
+
+{% endfor %}
+
+{% endif %}
+
+{% endblock content %}
