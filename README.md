@@ -143,7 +143,7 @@ Tidak ada feedback khusus untuk asdos di tutorial 2 karena semuanya sudah dijela
 
 ---
 
-# Screenshot tugas 2
+# Screenshot tugas 3
 ![xml](screenshot/tugas2-xml.png)
 ![json](screenshot/tugas2-json.png)
 ![xml by id](screenshot/tugas2-xml-by-id.png)
