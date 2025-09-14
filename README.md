@@ -56,7 +56,7 @@ Setelah selesai, saya push ulang project agar ```README.md``` ikut tersimpan di 
 # "Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara ```urls.py```, ```views.py```, ```models.py```, dan berkas ```html```."
 
 ![Django R-R Model](https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fcdn.hashnode.com%2Fres%2Fhashnode%2Fimage%2Fupload%2Fv1619466042369%2Fb3LAaF7TO.png)
-![Django R-R Model by me](djangoR-Rmodel.png)
+![Django R-R Model by me](screenshot/djangoR-Rmodel.png)
 
 ### alur request–response pada web aplikasi Django (secara sederhana, sesuai pemahaman saya):
 ### 1. Client (Browser/User)
@@ -104,3 +104,47 @@ Django sering dijadikan framework pertama dalam pembelajaran pengembangan perang
 # "Apakah ada feedback untuk asisten dosen tutorial 1 yang telah kamu kerjakan sebelumnya?"
 
 Untuk tutorial 1, saya tidak memiliki saran khusus karena menurut saya semua sudah disampaikan dengan baik dan jelas. Penjelasan serta arahan yang diberikan sudah sangat membantu dalam memahami materi, sehingga tidak ada saya tidak memiliki kritik/saran yang dapat disampaikan.
+
+---
+
+# "Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?"
+
+Data delivery diperlukan dalam pengimplementasian sebuah platform karena berfungsi memastikan informasi yang disampaikan antar komponen sistem maupun dengan layanan eksternal berjalan dengan aman, cepat, dan konsisten. Tanpa mekanisme pengiriman data yang baik, platform tidak dapat mendukung integrasi, menjaga keandalan informasi, maupun memberikan pengalaman pengguna yang lancar.
+
+---
+
+# "Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?"
+
+Menurut saya, JSON lebih baik dibandingkan XML dalam banyak kasus karena strukturnya lebih sederhana, ringan, dan mudah dibaca manusia maupun diproses oleh mesin. JSON menggunakan format berbasis objek yang langsung sesuai dengan struktur data di banyak bahasa pemrograman, sehingga lebih efisien untuk pertukaran data. Sementara itu, XML cenderung lebih verbose dengan banyak tag tambahan yang membuat ukuran data lebih besar. JSON lebih populer dibandingkan XML karena kecepatan parsing yang lebih tinggi, dukungan luas di API modern, serta kemudahannya digunakan pada aplikasi web dan mobile yang membutuhkan komunikasi cepat dan ringkas.
+
+---
+
+# "Jelaskan fungsi dari method ```is_valid()``` pada form Django dan mengapa kita membutuhkan method tersebut?"
+
+Method ```is_valid()``` pada form Django berfungsi untuk memeriksa apakah data yang dikirim melalui form sesuai dengan aturan validasi yang telah ditentukan, baik itu validasi bawaan (seperti tipe data, panjang karakter, required field) maupun validasi kustom yang kita definisikan sendiri. Jika data valid, method ini akan mengembalikan nilai True dan menyimpan data yang sudah dibersihkan di atribut ```cleaned_data```; jika tidak valid, maka mengembalikan False dan menyimpan pesan error di atribut ```errors```. Kita membutuhkan method ini karena tanpa validasi, data yang masuk ke sistem bisa tidak konsisten, salah format, atau bahkan berpotensi menimbulkan bug serta celah keamanan.
+
+---
+
+# "Mengapa kita membutuhkan ```csrf_token``` saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan ```csrf_token``` pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?"
+
+Kita membutuhkan ```csrf_token``` saat membuat form di Django untuk melindungi aplikasi dari serangan ```Cross-Site Request Forgery (CSRF)```, yaitu serangan di mana penyerang mencoba membuat pengguna yang sudah login melakukan aksi tanpa sadar (misalnya mengirim form atau melakukan transaksi) melalui permintaan palsu. Jika ```csrf_token``` tidak ditambahkan, form menjadi rentan karena server tidak bisa membedakan antara permintaan sah dari pengguna dan permintaan berbahaya dari situs lain. Penyerang bisa memanfaatkannya dengan menyisipkan form tersembunyi atau link berbahaya. Ketika korban mengaksesnya, browser akan otomatis mengirim cookie sesi korban ke server, sehingga aksi berbahaya dapat dieksekusi seolah-olah dilakukan oleh korban sendiri.
+
+---
+
+# "Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)."
+
+Pertama, saya memperbarui model ```Product``` dengan menambahkan primary key ```id``` berupa UUID agar setiap produk memiliki identitas unik yang tidak mudah ditebak. Setelah itu, saya membuat sebuah ```ProductForm``` yang nantinya digunakan sebagai form input saat menambahkan produk baru ke dalam sistem. Form ini kemudian dihubungkan dengan template ```create_product.html``` supaya pengguna bisa mengisi data produk ketika ingin menambahkan produk. Selanjutnya, saya mengedit ```home.html``` agar dapat menampilkan daftar semua produk yang tersimpan beserta informasi pentingnya, lalu menambahkan ```product_detail.html``` untuk menampilkan detail lengkap dari sebuah produk tertentu. Selain itu, saya menambahkan fungsi pada ```views.py``` untuk menangani proses pembuatan produk baru serta fungsi lain untuk menyajikan data produk dalam format ```JSON``` maupun ```XML``` sehingga lebih fleksibel jika data ingin diakses sebagai ```API```. Demi keamanan, saya menambahkan pengaturan ```CSRF_TRUSTED_ORIGINS``` agar form hanya menerima input dari sumber tepercaya dan tidak mudah dieksploitasi penyerang. Terakhir, saya membuat template utama ```base.html``` sebagai kerangka dasar agar semua halaman memiliki struktur yang konsisten dan lebih mudah dikelola.
+
+---
+
+# "Apakah ada feedback untuk asdos di tutorial 2 yang sudah kalian kerjakan?"
+
+Tidak ada feedback khusus untuk asdos di tutorial 2 karena semuanya sudah dijelaskan dengan jelas dan baik, sehingga tidak ada saran tambahan.
+
+---
+
+# Screenshot tugas 2
+![xml](screenshot/tugas2-xml.png)
+![json](screenshot/tugas2-json.png)
+![xml by id](screenshot/tugas2-xml-by-id.png)
+![json by id](screenshot/tugas2-json-by-id.png)
