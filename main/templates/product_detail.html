@@ -16,6 +16,12 @@
 {% endif %}
 
 <div style="width: 25%; border-top: 2px dashed gray; margin: 20px 0;"></div>
+{% if product.user %}
+    <p><strong>Seller: </strong>{{ product.user.username }}</p>
+{% else %}
+    <p><strong>Seller: </strong>Anonymous</p>
+{% endif %}
+<p><strong>Description: </strong></p>
 <p>{{ product.description }}</p>
 
 {% endblock content %}

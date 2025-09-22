@@ -9,7 +9,23 @@
     <button>+ Add Product</button>
 </a>
 
-<br>
+<a href="{% url 'main:logout' %}">
+    <button>Logout</button>
+</a>
+
+<div style="width: 25%; border-top: 2px dashed gray; margin: 20px 0;"></div>
+
+<p>Username: {{ username }}</p>
+<p>Sesi terakhir login: {{ last_login }}</p>
+
+<div style="width: 25%; border-top: 2px dashed gray; margin: 20px 0;"></div>
+
+<a href="?filter=all">
+    <button type="button">All Articles</button>
+</a>
+<a href="?filter=my">
+    <button type="button">My Articles</button>
+</a>
 
 {% if not product_list %}
 <p>Belum ada product yang dijual di toko ini D:</p>
