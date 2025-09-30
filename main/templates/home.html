@@ -1,58 +1,79 @@
-{% extends 'base.html' %}
-{% block content %}
-<h1>Welcome to Slime Shop!</h1>
+{% extends 'base_navbar.html' %}
+{% load static %}
 
-<p>Owner : {{ name }}</p>
-<p>Class : {{ class }}</p>
+{% block meta %}
+<title>Home - Slime Shop</title>
+{% endblock meta %}
 
-<a href="{% url 'main:create_product' %}">
-    <button>+ Add Product</button>
-</a>
+{% block main_content %}
 
-<a href="{% url 'main:logout' %}">
-    <button>Logout</button>
-</a>
-
-<div style="width: 25%; border-top: 2px dashed gray; margin: 20px 0;"></div>
-
-<p>Username: {{ username }}</p>
-<p>Sesi terakhir login: {{ last_login }}</p>
-
-<div style="width: 25%; border-top: 2px dashed gray; margin: 20px 0;"></div>
-
-<a href="?filter=all">
-    <button type="button">All Articles</button>
-</a>
-<a href="?filter=my">
-    <button type="button">My Articles</button>
-</a>
-
-{% if not product_list %}
-<p>Belum ada product yang dijual di toko ini D:</p>
-{% else %}
-
-{% for product in product_list %}
-<div>
-    {% if forloop.counter > 1 %}
-    <div style="width: 25%; border-top: 2px dashed gray; margin: 20px 0;"></div>
-    {% endif %}
-    <h2><a href="{% url 'main:show_product' product.id %}">{{ product.name }}</a></h2>
-    <h3>Price : {{ product.price }}</h3>
-    <h3>Stock : {{ product.stock }}</h3>
-
-    <p><b>{{ product.category }}</b>
-        {% if product.is_featured %} | <b>Featured!</b> {% endif %}
-    </p>
-
-    {% if product.thumbnail %}
-    <img src="{{ product.thumbnail }}" alt="thumbnail" width="150" height="100">
-    {% endif %}
-
-    <p><a href="{% url 'main:show_product' product.id %}"><button>Read More</button></a></p>
+<header class="flex items-center justify-between pb-4 border-b-2 border-gray-200 mb-6">
+    <div>
+        <h1 class="text-3xl font-bold text-gray-800">Welcome, {{ user.username }}!</h1>
+        <p class="mt-1 text-sm text-gray-500">Last login: {{ last_login }}</p>
+    </div>
+    <a href="{% url 'main:create_product' %}"
+        class="bg-emerald-500 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-emerald-600 transition duration-150 ease-in-out flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                clip-rule="evenodd" />
+        </svg>
+        Add Product
+    </a>
+</header>
+{% if messages %}
+<div class="mt-4 space-y-2">
+    {% for message in messages %}
+    <div class="p-4 rounded-md text-sm
+          {% if message.tags == 'success' %} 
+            bg-green-100 border border-green-400 text-green-800
+          {% elif message.tags == 'error' %} 
+            bg-red-100 border border-red-400 text-red-800
+          {% else %}
+            bg-blue-100 border border-blue-400 text-blue-800
+          {% endif %}" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<div class="mb-8">
+    <p class="text-lg font-semibold text-gray-700 mb-2">Browse Products</p>
+    <div class="flex space-x-2">
+        <a href="?filter=all">
+            <button type="button"
+                class="px-4 py-2 text-sm font-medium rounded-md transition {% if request.GET.filter != 'my' %} bg-emerald-500 text-white shadow {% else %} bg-gray-200 text-gray-700 hover:bg-gray-300 {% endif %}">All
+                Products</button>
+        </a>
+        <a href="?filter=my">
+            <button type="button"
+                class="px-4 py-2 text-sm font-medium rounded-md transition {% if request.GET.filter == 'my' %} bg-emerald-500 text-white shadow {% else %} bg-gray-200 text-gray-700 hover:bg-gray-300 {% endif %}">My
+                Products</button>
+        </a>
+    </div>
 </div>
 
-{% endfor %}
 
+{% if not product_list %}
+<div class="text-center py-16 px-6 bg-white rounded-lg shadow-md">
+    <img src="https://api.iconify.design/heroicons/cube-transparent.svg?color=%2334d399" alt="Empty Box"
+        class="mx-auto h-24 w-24 text-gray-400 mb-4">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-2">No Products Found!</h2>
+    <p class="text-gray-500 mb-6">It looks like there are no products listed in the shop yet. Why not add the first one?
+    </p>
+    <a href="{% url 'main:create_product' %}"
+        class="bg-emerald-500 text-white font-bold py-2 px-5 rounded-lg shadow-md hover:bg-emerald-600 transition duration-150 ease-in-out">
+        Add Your First Product
+    </a>
+</div>
+{% else %}
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+    {% for product in product_list %}
+    {% include 'product_card.html' with product=product %}
+    {% endfor %}
+</div>
 {% endif %}
 
-{% endblock content %}
+{% endblock main_content %}

@@ -3,7 +3,11 @@
 
 ---
 
-# "Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)."
+# Tugas 2
+
+---
+
+## "Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)."
 
 ### 1. Membuat project Django baru
 Pertama saya membuat sebuah project Django bernama slime_shop dengan perintah ```django-admin startproject slime_shop.```
@@ -53,7 +57,7 @@ Setelah selesai, saya push ulang project agar ```README.md``` ikut tersimpan di 
 
 ---
 
-# "Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara ```urls.py```, ```views.py```, ```models.py```, dan berkas ```html```."
+## "Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara ```urls.py```, ```views.py```, ```models.py```, dan berkas ```html```."
 
 ![Django R-R Model](https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fcdn.hashnode.com%2Fres%2Fhashnode%2Fimage%2Fupload%2Fv1619466042369%2Fb3LAaF7TO.png)
 ![Django R-R Model by me](screenshot/djangoR-Rmodel.png)
@@ -80,13 +84,13 @@ Setelah selesai, saya push ulang project agar ```README.md``` ikut tersimpan di 
 
 ---
 
-# "Jelaskan peran ```settings.py``` dalam proyek Django!"
+## "Jelaskan peran ```settings.py``` dalam proyek Django!"
 
 ```settings.py``` berperan sebagai pusat konfigurasi proyek Django. File ini menyimpan semua pengaturan penting seperti konfigurasi database, daftar aplikasi yang digunakan,, template, pengaturan keamanan (secret key, debug mode), daftar host yang diizinkan, dll. Dengan adanya ```settings.py```, semua aspek proyek bisa diatur secara terpusat sehingga mudah dikelola dan disesuaikan dengan environment yang ada.
 
 ---
 
-# "Bagaimana cara kerja migrasi database di Django?"
+## "Bagaimana cara kerja migrasi database di Django?"
 
 Migrasi di Django adalah mekanisme untuk menerapkan perubahan pada model ke dalam database secara otomatis. Prosesnya bekerja dalam dua tahap utama:
 
@@ -95,55 +99,59 @@ Migrasi di Django adalah mekanisme untuk menerapkan perubahan pada model ke dala
 
 ---
 
-# "Menurut Anda, dari semua framework yang ada, mengapa framework Django dijadikan permulaan pembelajaran pengembangan perangkat lunak?"
+## "Menurut Anda, dari semua framework yang ada, mengapa framework Django dijadikan permulaan pembelajaran pengembangan perangkat lunak?"
 
 Django sering dijadikan framework pertama dalam pembelajaran pengembangan perangkat lunak karena sifatnya yang ```“batteries included”```, yang artinya sudah menyediakan banyak fitur bawaan seperti autentikasi user, sistem admin, ORM untuk menghubungkan aplikasi dengan database, serta struktur proyek yang rapi dan terstandarisasi. Hal ini membuat pemula tidak perlu membangun semuanya dari nol, sehingga bisa lebih cepat membuat aplikasi web dengan mudah. Selain itu, dokumentasinya lengkap, komunitasnya besar, dan banyak digunakan di industri nyata, sehingga belajar Django tidak hanya mempermudah pemahaman dasar konsep web development, tetapi juga relevan untuk kebutuhan professional.
 
 ---
 
-# "Apakah ada feedback untuk asisten dosen tutorial 1 yang telah kamu kerjakan sebelumnya?"
+## "Apakah ada feedback untuk asisten dosen tutorial 1 yang telah kamu kerjakan sebelumnya?"
 
 Untuk tutorial 1, saya tidak memiliki saran khusus karena menurut saya semua sudah disampaikan dengan baik dan jelas. Penjelasan serta arahan yang diberikan sudah sangat membantu dalam memahami materi, sehingga tidak ada saya tidak memiliki kritik/saran yang dapat disampaikan.
 
 ---
 
-# "Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?"
+# Tugas 3
+
+---
+
+## "Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?"
 
 Data delivery diperlukan dalam pengimplementasian sebuah platform karena berfungsi memastikan informasi yang disampaikan antar komponen sistem maupun dengan layanan eksternal berjalan dengan aman, cepat, dan konsisten. Tanpa mekanisme pengiriman data yang baik, platform tidak dapat mendukung integrasi, menjaga keandalan informasi, maupun memberikan pengalaman pengguna yang lancar.
 
 ---
 
-# "Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?"
+## "Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?"
 
 Menurut saya, JSON lebih baik dibandingkan XML dalam banyak kasus karena strukturnya lebih sederhana, ringan, dan mudah dibaca manusia maupun diproses oleh mesin. JSON menggunakan format berbasis objek yang langsung sesuai dengan struktur data di banyak bahasa pemrograman, sehingga lebih efisien untuk pertukaran data. Sementara itu, XML cenderung lebih verbose dengan banyak tag tambahan yang membuat ukuran data lebih besar. JSON lebih populer dibandingkan XML karena kecepatan parsing yang lebih tinggi, dukungan luas di API modern, serta kemudahannya digunakan pada aplikasi web dan mobile yang membutuhkan komunikasi cepat dan ringkas.
 
 ---
 
-# "Jelaskan fungsi dari method ```is_valid()``` pada form Django dan mengapa kita membutuhkan method tersebut?"
+## "Jelaskan fungsi dari method ```is_valid()``` pada form Django dan mengapa kita membutuhkan method tersebut?"
 
 Method ```is_valid()``` pada form Django berfungsi untuk memeriksa apakah data yang dikirim melalui form sesuai dengan aturan validasi yang telah ditentukan, baik itu validasi bawaan (seperti tipe data, panjang karakter, required field) maupun validasi kustom yang kita definisikan sendiri. Jika data valid, method ini akan mengembalikan nilai True dan menyimpan data yang sudah dibersihkan di atribut ```cleaned_data```; jika tidak valid, maka mengembalikan False dan menyimpan pesan error di atribut ```errors```. Kita membutuhkan method ini karena tanpa validasi, data yang masuk ke sistem bisa tidak konsisten, salah format, atau bahkan berpotensi menimbulkan bug serta celah keamanan.
 
 ---
 
-# "Mengapa kita membutuhkan ```csrf_token``` saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan ```csrf_token``` pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?"
+## "Mengapa kita membutuhkan ```csrf_token``` saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan ```csrf_token``` pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?"
 
 Kita membutuhkan ```csrf_token``` saat membuat form di Django untuk melindungi aplikasi dari serangan ```Cross-Site Request Forgery (CSRF)```, yaitu serangan di mana penyerang mencoba membuat pengguna yang sudah login melakukan aksi tanpa sadar (misalnya mengirim form atau melakukan transaksi) melalui permintaan palsu. Jika ```csrf_token``` tidak ditambahkan, form menjadi rentan karena server tidak bisa membedakan antara permintaan sah dari pengguna dan permintaan berbahaya dari situs lain. Penyerang bisa memanfaatkannya dengan menyisipkan form tersembunyi atau link berbahaya. Ketika korban mengaksesnya, browser akan otomatis mengirim cookie sesi korban ke server, sehingga aksi berbahaya dapat dieksekusi seolah-olah dilakukan oleh korban sendiri.
 
 ---
 
-# "Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)."
+## "Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)."
 
 Pertama, saya memperbarui model ```Product``` dengan menambahkan primary key ```id``` berupa UUID agar setiap produk memiliki identitas unik yang tidak mudah ditebak. Setelah itu, saya membuat sebuah ```ProductForm``` yang nantinya digunakan sebagai form input saat menambahkan produk baru ke dalam sistem. Form ini kemudian dihubungkan dengan template ```create_product.html``` supaya pengguna bisa mengisi data produk ketika ingin menambahkan produk. Selanjutnya, saya mengedit ```home.html``` agar dapat menampilkan daftar semua produk yang tersimpan beserta informasi pentingnya, lalu menambahkan ```product_detail.html``` untuk menampilkan detail lengkap dari sebuah produk tertentu. Selain itu, saya menambahkan fungsi pada ```views.py``` untuk menangani proses pembuatan produk baru serta fungsi lain untuk menyajikan data produk dalam format ```JSON``` maupun ```XML``` sehingga lebih fleksibel jika data ingin diakses sebagai ```API```. Demi keamanan, saya menambahkan pengaturan ```CSRF_TRUSTED_ORIGINS``` agar form hanya menerima input dari sumber tepercaya dan tidak mudah dieksploitasi penyerang. Terakhir, saya membuat template utama ```base.html``` sebagai kerangka dasar agar semua halaman memiliki struktur yang konsisten dan lebih mudah dikelola.
 
 ---
 
-# "Apakah ada feedback untuk asdos di tutorial 2 yang sudah kalian kerjakan?"
+## "Apakah ada feedback untuk asdos di tutorial 2 yang sudah kalian kerjakan?"
 
 Tidak ada feedback khusus untuk asdos di tutorial 2 karena semuanya sudah dijelaskan dengan jelas dan baik, sehingga tidak ada saran tambahan.
 
 ---
 
-# Screenshot tugas 3
+## Screenshot tugas 3
 ![xml](screenshot/tugas2-xml.png)
 ![json](screenshot/tugas2-json.png)
 ![xml by id](screenshot/tugas2-xml-by-id.png)
@@ -151,30 +159,68 @@ Tidak ada feedback khusus untuk asdos di tutorial 2 karena semuanya sudah dijela
 
 ---
 
-# "Apa itu Django ```AuthenticationForm```? Jelaskan juga kelebihan dan kekurangannya."
+# Tugas 4
+
+---
+
+## "Apa itu Django ```AuthenticationForm```? Jelaskan juga kelebihan dan kekurangannya."
 
 Django ```AuthenticationForm``` adalah form bawaan dari Django yang dipakai untuk proses login user, biasanya dipadukan dengan sistem autentikasi default Django. Form ini secara otomatis menyediakan field untuk username dan password, sekaligus melakukan validasi apakah data yang dimasukkan sesuai dengan user yang terdaftar di database. Kelebihannya, ```AuthenticationForm``` praktis karena sudah jadi bawaan framework, aman karena terintegrasi langsung dengan sistem autentikasi Django, serta mudah di-extend kalau kita butuh menambahkan fitur tambahan seperti captcha atau custom error message. Kekurangannya, form ini cukup terbatas kalau kita ingin membuat login dengan metode non-standar seperti email atau nomor telepon tanpa override, dan tampilannya juga sederhana sehingga biasanya tetap butuh penyesuaian agar sesuai dengan kebutuhan desain front-end.
 
 ---
 
-# "Apa perbedaan antara autentikasi dan otorisasi? Bagaiamana Django mengimplementasikan kedua konsep tersebut?"
+## "Apa perbedaan antara autentikasi dan otorisasi? Bagaiamana Django mengimplementasikan kedua konsep tersebut?"
 
 Autentikasi adalah proses untuk memastikan identitas pengguna, biasanya dengan username dan password, sedangkan otorisasi adalah proses menentukan hak akses apa saja yang boleh dilakukan oleh pengguna setelah berhasil terautentikasi. Di Django, autentikasi ditangani oleh sistem bawaan yang mengecek kredensial user menggunakan model User dan backend autentikasi. Setelah login berhasil, Django akan menyimpan status login user di session. Untuk otorisasi, Django menyediakan permission dan group yang bisa diatur, misalnya apakah seorang user boleh menambah, mengubah, atau menghapus objek tertentu. Selain itu, Django juga punya decorator seperti ```@login_required``` untuk membatasi akses view sesuai dengan aturan yang sudah ditetapkan.
 
 ---
 
-# "Apa saja kelebihan dan kekurangan session dan cookies dalam konteks menyimpan state di aplikasi web?"
+## "Apa saja kelebihan dan kekurangan session dan cookies dalam konteks menyimpan state di aplikasi web?"
 
 Session dan cookies sama-sama dipakai untuk menyimpan state di aplikasi web, tapi cara kerjanya berbeda. Cookies disimpan langsung di browser user sehingga mudah diakses dari client side, praktis untuk menyimpan data sederhana seperti preferensi tampilan atau remember me. Kelebihannya, cookies ringan dan tidak membebani server, tapi kekurangannya lebih rentan dimanipulasi atau dicuri kalau tidak diamankan dengan enkripsi dan flag khusus seperti ```HttpOnly``` atau ```Secure```. Session sebaliknya disimpan di server, sementara browser hanya menyimpan session ID di cookie untuk mengidentifikasi user. Kelebihannya lebih aman karena data penting tidak ada di client side, dan bisa menyimpan informasi lebih kompleks. Namun kekurangannya membebani server karena harus mengelola data session untuk banyak user, dan biasanya butuh mekanisme tambahan agar tetap konsisten kalau server dijalankan secara terdistribusi.
 
 ---
 
-# "Apakah penggunaan cookies aman secara default dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai? Bagaimana Django menangani hal tersebut?"
+## "Apakah penggunaan cookies aman secara default dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai? Bagaimana Django menangani hal tersebut?"
 
 Cookies tidak sepenuhnya aman secara default karena data yang disimpan di sisi client bisa saja dibaca atau dimanipulasi jika tidak dilindungi dengan baik. Risiko yang sering muncul misalnya pencurian cookie lewat serangan XSS, pencurian session melalui sniffing jika tidak memakai HTTPS, atau manipulasi data karena cookie bisa diubah langsung oleh user. Django sendiri sudah menyediakan mekanisme bawaan untuk mengurangi risiko ini, misalnya menandai cookie session dengan flag ```HttpOnly``` agar tidak bisa diakses lewat JavaScript, ```Secure``` supaya hanya dikirim melalui koneksi HTTPS, serta fitur ```SESSION_COOKIE_AGE``` dan ```SESSION_EXPIRE_AT_BROWSER_CLOSE``` untuk mengatur masa berlaku. Selain itu, Django juga melakukan signing pada cookie yang berisi data (seperti ```SignedCookieSession```) agar tidak bisa dimodifikasi tanpa terdeteksi. Jadi aman tidaknya penggunaan cookies sangat bergantung pada konfigurasi developer, meskipun Django sudah memberi perlindungan dasar.
 
 ---
 
-# "Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)."
+## "Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)."
 
 Awalnya saya mengedit model ```Product``` dengan menambahkan relasi ke model ```User``` bawaan Django agar setiap produk terhubung dengan user yang membuatnya. Setelah itu saya menambahkan fitur autentikasi dengan memanfaatkan sistem auth dari Django, sekaligus membuat halaman HTML untuk menangani login dan logout. Saya juga membuat halaman HTML berisi form untuk registrasi akun baru. Pada beberapa fungsi di ```views.py```, saya menambahkan decorator ```@login_required``` untuk memastikan hanya user yang sudah login yang bisa melihat daftar produk maupun menambahkan produk. Selain itu, saya menambahkan cookie ```last_login``` untuk menampilkan informasi waktu terakhir user login, serta menampilkan nama user pada ```home_page```. Terakhir, pada halaman detail setiap produk, saya menambahkan informasi nama seller atau user yang merilis produk tersebut. Setelah semua selesai, saya melakukan push project ke ```GitHub``` dan juga ke ```PWS```.
+
+---
+
+# Tugas 5
+
+---
+
+## "Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!"
+
+Urutan prioritas pengambilan CSS selector ditentukan oleh skor spesifisitasnya. Aturan dengan skor tertinggi akan diterapkan. Hirarki kekuatannya dari yang paling tinggi ke paling rendah adalah sebagai berikut. Pertama, deklarasi yang ditandai dengan ```!important``` akan selalu menang dan menimpa semua aturan lain. Setelah itu, prioritas tertinggi adalah inline style, yaitu style yang ditulis langsung di dalam atribut style pada tag HTML. Di bawahnya adalah selector ID, (contoh: ```#header```). Selanjutnya, yang memiliki kekuatan setara adalah selector class (contoh: ```.tombol```), selector atribut (contoh: ```[type="submit"]```), dan pseudo-class (contoh: ```:hover```). Prioritas yang paling rendah adalah selector elemen atau tag (contoh: ```div```, ```h1```, ```p```). Jika ada dua selector dengan skor spesifisitas yang sama persis, maka aturan yang didefinisikan paling akhir atau paling bawah di dalam file CSS yang akan digunakan.
+
+---
+
+## "Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design, serta jelaskan mengapa!"
+
+Konsep ```responsive design``` menjadi sangat penting karena saat ini pengguna mengakses internet dari berbagai jenis perangkat dengan ukuran layar yang sangat beragam, mulai dari ponsel, tablet, hingga monitor desktop yang lebar. Tujuan utamanya adalah untuk memastikan ```user experience``` yang baik di semua perangkat tersebut, salah satu contoh kasusnya yaitu pengguna tidak perlu melakukan ```zoom``` atau menggeser layar ke samping untuk melihat konten. Hal ini krusial karena website yang sulit digunakan di ponsel akan cepat ditinggalkan oleh pengunjung, dan bahkan ```Google``` akan memberikan peringkat lebih rendah pada hasil pencarian karena mereka menerapkan sistem ```mobile-first```. Sebagai contoh aplikasi yang sudah menerapkan ini adalah ```Tokopedia```. Mereka wajib responsif karena mayoritas pembeli mengakses dari ponsel, dan tampilan yang baik di semua perangkat akan meningkatkan penjualan. Sebaliknya, contoh klasik situs yang tidak responsif adalah website resmi film ```Space Jam``` dari tahun 1996. Situs tersebut dibuat pada era di mana internet mobile belum menjadi pertimbangan utama dan sengaja dibiarkan dalam format aslinya sebagai artefak nostalgia, sehingga tidak ada alasan komersial untuk memperbaruinya menjadi responsif.
+
+---
+
+## "Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!"
+
+Margin, border, dan padding adalah tiga properti dasar dari ```CSS Box Model``` yang mengatur ruang di sekitar dan di dalam sebuah elemen HTML. Perbedaan utamanya terletak pada lokasinya. ```Padding``` adalah ruang kosong di bagian *dalam* elemen, yaitu jarak antara konten (seperti teks atau gambar) dengan garis batasnya. Selanjutnya, ```border``` adalah garis batas itu sendiri yang mengelilingi konten dan padding; properti ini bisa diatur ketebalan, gaya, dan warnanya. Sedangkan ```margin``` adalah ruang kosong di bagian *luar* elemen, yang berfungsi untuk memberikan jarak atau mendorong elemen lain agar tidak menempel padanya. Untuk mengimplementasikannya, kita bisa menggunakan properti CSS biasa atau kelas utilitas dari framework seperti Tailwind CSS. Dalam CSS murni, kita menggunakan properti seperti ```padding: 10px;```, ```border: 1px solid black;```, dan ```margin: 15px;```. Namun dalam proyek saya yang menggunakan Tailwind, saya cukup memakai kelas utilitas yang lebih cepat seperti ```p-4``` untuk padding, ```border border-gray-300``` untuk border, dan ```m-6``` untuk margin. Jadi, urutannya dari dalam ke luar adalah ```konten -> padding -> border -> margin```.
+
+---
+
+## "Jelaskan konsep flex box dan grid layout beserta kegunaannya!"
+
+Flexbox dan Grid adalah dua sistem layout modern di CSS untuk mengatur posisi dan perataan elemen, namun keduanya memiliki kegunaan yang berbeda secara fundamental. Konsep utama ```flexbox``` adalah untuk mengatur layout dalam ```satu dimensi```, entah itu sebagai sebuah ```baris``` horizontal ataupun sebuah ```kolom``` vertikal. Kegunaan utamanya adalah untuk ```distribusi ruang``` dan ```perataan item``` di dalam sebuah kontainer, misalnya untuk menyejajarkan item-item di dalam sebuah navbar atau untuk membuat sebuah elemen berada tepat di tengah halaman. Di sisi lain, ```grid``` dirancang untuk layout ```dua dimensi```, yaitu mengatur elemen dalam ```baris dan kolom``` secara bersamaan, mirip seperti tabel atau spreadsheet. Ini membuatnya sangat ideal untuk membangun ```layout utama halaman``` yang kompleks, seperti mengatur posisi header, sidebar, konten utama, dan footer, atau untuk membuat galeri produk yang tersusun rapi. Singkatnya, aturan praktisnya, gunakan ```flexbox``` untuk mengatur komponen-komponen kecil dan perataan konten di dalamnya, dan gunakan ```grid``` untuk mengatur tata letak makro atau keseluruhan dari halaman web Anda.
+
+---
+
+## "Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!"
+
+Proses implementasi diawali dengan mengkonfigurasi file ```settings.py```, di mana saya menambahkan ```whitenoise.middleware.WhiteNoiseMiddleware```. Langkah ini bertujuan untuk memastikan file statis seperti CSS dapat disajikan dengan baik di lingkungan produksi, karena server bawaan Django tidak melakukannya. Berikutnya, saya membuat form custom di ```forms.py``` yaitu ```ProductForm```, ```LoginForm```, dan ```RegisterForm```. Tujuannya adalah agar bisa menerapkan styling ```Tailwind CSS``` secara spesifik pada setiap elemen input, karena render form bawaan Django tidak memungkinkan kustomisasi tersebut. Pada template dasar ```base.html```, saya menyertakan CDN untuk ```Tailwind CSS``` sebagai framework styling utama dan ```Alpine.js``` untuk menangani interaktivitas pada komponen dinamis seperti dropdown navbar di versi mobile. Setelah itu, saya membangun logika inti aplikasi dengan membuat fungsi-fungsi view di ```views.py``` untuk proses edit dan delete produk, lengkap dengan validasi kepemilikan, lalu mendaftarkan rutenya di ```urls.py```. Untuk menjaga struktur kode tetap rapi, saya memecah tampilan menjadi beberapa komponen template seperti ```navbar.html```, ```base_navbar.html``` untuk layout dengan navigasi, dan ```product_card.html``` untuk desain kartu produk. Dengan semua fondasi tersebut, saya kemudian menerapkan desain yang konsisten menggunakan ```Tailwind CSS``` pada semua halaman utama, termasuk ```home```, ```login```, ```register```, ```product_detail```, dan form ```create_product``` serta ```edit_product```. Akhirnya, project di push ke ```GitHub``` dan aplikasi di deploy ke ```PWS``` agar dapat diakses secara publik.

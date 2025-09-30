@@ -1,0 +1,32 @@
+{% extends 'base_navbar.html' %}
+
+{% block meta %}
+<title>Confirm Delete</title>
+{% endblock meta %}
+
+{% block main_content %}
+<div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold text-gray-800 mb-4">Confirm Deletion</h1>
+
+    <p class="text-gray-600 mb-6">
+        Are you sure you want to delete the product:
+        <strong class="font-semibold">{{ product.name }}</strong>?
+        <br>
+        This action cannot be undone.
+    </p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="flex items-center space-x-4">
+            <button type="submit"
+                class="bg-red-600 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-red-700 transition duration-150 ease-in-out">
+                Yes, Delete Product
+            </button>
+            <a href="{% url 'main:home_page' %}"
+                class="bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-lg hover:bg-gray-300 transition duration-150 ease-in-out">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock main_content %}

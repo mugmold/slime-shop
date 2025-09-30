@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.core import serializers
 from django.shortcuts import get_object_or_404, redirect, render
 from main.models import Product
-from main.forms import ProductForm
+from main.forms import ProductForm, LoginForm, RegisterForm
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib import messages
 
 
 @login_required(login_url='/login')
@@ -23,9 +24,9 @@ def home_page(request):
     user = request.user
 
     context = {
-        'npm': '2406347424',
-        'name': 'Bermulya Anugrah Putra',
-        'class': 'PBP D',
+        # 'npm': '2406347424',
+        # 'name': 'Bermulya Anugrah Putra',
+        # 'class': 'PBP D',
         'product_list': product_list,
         "username": user.username,
         'last_login': request.COOKIES.get('last_login', 'Never'),
@@ -45,21 +46,46 @@ def create_product(request):
             product_entry.save()
             return redirect('main:home_page')
 
-        else:
-            new_form = ProductForm()
+        context = {'form': form}
 
-            context = {
-                'form': new_form,
-                'errors': form.errors
-            }
-
-            return render(request, "create_product.html", context)
+        return render(request, "create_product.html", context)
 
     elif request.method == "GET":
         context = {'form': form}
         return render(request, "create_product.html", context)
 
     return HttpResponse(status=404)
+
+
+@login_required(login_url='/login')
+def edit_product(request, id):
+    product = get_object_or_404(Product, pk=id)
+    if product.user != request.user:
+        messages.error(
+            request, "Access denied. You are not the owner of this product.")
+        return redirect('main:home_page')
+    form = ProductForm(request.POST or None, instance=product)
+    if form.is_valid() and request.method == 'POST':
+        form.save()
+        messages.success(request, "Product updated successfully!")
+        return redirect('main:home_page')
+    context = {'form': form, 'product': product}
+    return render(request, "edit_product.html", context)
+
+
+@login_required(login_url='/login')
+def delete_product(request, id):
+    product = get_object_or_404(Product, pk=id)
+    if product.user != request.user:
+        messages.error(
+            request, "Access denied. You are not the owner of this product.")
+        return redirect('main:home_page')
+    if request.method == 'POST':
+        product.delete()
+        messages.success(request, "Product deleted successfully!")
+        return HttpResponseRedirect(reverse('main:home_page'))
+    context = {'product': product}
+    return render(request, 'delete_product.html', context)
 
 
 @login_required(login_url='/login')
@@ -108,10 +134,10 @@ def show_json_by_id(request, product_id):
 
 
 def register(request):
-    form = UserCreationForm()
+    form = RegisterForm()
 
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(
@@ -124,17 +150,23 @@ def register(request):
 
 def login_user(request):
     if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
+        form = LoginForm(data=request.POST)
 
         if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            response = HttpResponseRedirect(reverse("main:home_page"))
-            response.set_cookie('last_login', str(datetime.datetime.now()))
-            return response
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                response = HttpResponseRedirect(reverse("main:home_page"))
+                response.set_cookie('last_login', str(datetime.datetime.now()))
+                return response
+            else:
+                messages.error(request, 'Wrong username or password.')
 
     else:
-        form = AuthenticationForm(request)
+        form = LoginForm()
+
     context = {'form': form}
     return render(request, 'login.html', context)
 

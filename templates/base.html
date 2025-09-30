@@ -6,6 +6,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% block meta %} {% endblock meta %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.10/dist/cdn.min.js"></script>
+    <style>
+        /* [x-cloak] digunakan untuk menyembunyikan elemen Alpine.js sampai dia siap */
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
 </head>
 
 <body>
