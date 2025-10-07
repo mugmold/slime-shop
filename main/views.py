@@ -11,27 +11,25 @@ import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
+from django.http import JsonResponse
 
 
 @login_required(login_url='/login')
 def home_page(request):
-    filter_type = request.GET.get("filter", "all")
-    if filter_type == "all":
-        product_list = Product.objects.all()
-    else:
-        product_list = Product.objects.filter(user=request.user)
-
-    user = request.user
+    # ambil message yang mungkin ada dari request sebelumnya
+    django_messages = []
+    for message in messages.get_messages(request):
+        django_messages.append({
+            "level": message.level,
+            "message": message.message,
+            "tags": message.tags,
+        })
 
     context = {
-        # 'npm': '2406347424',
-        # 'name': 'Bermulya Anugrah Putra',
-        # 'class': 'PBP D',
-        'product_list': product_list,
-        "username": user.username,
+        'username': request.user.username,
         'last_login': request.COOKIES.get('last_login', 'Never'),
+        'django_messages': django_messages,  # kirim message ke template
     }
-
     return render(request, 'home.html', context)
 
 
@@ -44,6 +42,8 @@ def create_product(request):
             product_entry = form.save(commit=False)
             product_entry.user = request.user
             product_entry.save()
+            messages.success(
+                request, "New product has been added successfully!")
             return redirect('main:home_page')
 
         context = {'form': form}
@@ -106,11 +106,15 @@ def show_xml(request):
     return HttpResponse(xml_data, content_type="application/xml")
 
 
+# kudu nambahin filter, butuh buat call di javascript
 @login_required(login_url='/login')
 def show_json(request):
-    product_list = Product.objects.all()
-    json_data = serializers.serialize("json", product_list)
-    return HttpResponse(json_data, content_type="application/json")
+    filter_type = request.GET.get('filter', 'all')
+    if filter_type == 'my':
+        product_list = Product.objects.filter(user=request.user)
+    else:
+        product_list = Product.objects.all()
+    return HttpResponse(serializers.serialize("json", product_list), content_type="application/json")
 
 
 @login_required(login_url='/login')
@@ -123,27 +127,49 @@ def show_xml_by_id(request, product_id):
         return HttpResponse(status=404)
 
 
+# kudu tambahin format data sendiri biar bsa include seller_name di jsonnya
 @login_required(login_url='/login')
 def show_json_by_id(request, product_id):
     try:
-        product_item = Product.objects.get(pk=product_id)
-        json_data = serializers.serialize("json", [product_item])
-        return HttpResponse(json_data, content_type="application/json")
+        product = Product.objects.get(pk=product_id)
+        data = {
+            "pk": product.pk,
+            "fields": {
+                "name": product.name,
+                "price": product.price,
+                "stock": product.stock,
+                "description": product.description,
+                "thumbnail": product.thumbnail,
+                "category": product.category,
+                "is_featured": product.is_featured,
+                "seller_name": product.user.username if product.user else "[Anonymous]"
+            }
+        }
+        return JsonResponse(data)
     except Product.DoesNotExist:
-        return HttpResponse(status=404)
+        return JsonResponse({"status": "error", "message": "Product not found."}, status=404)
 
 
 def register(request):
-    form = RegisterForm()
-
-    if request.method == "POST":
+    if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(
-                request, 'Your account has been succesfully created!')
-            return redirect('main:login')
-
+            return JsonResponse({
+                "status": "success",
+                "message": "Registration successful! You will be redirected to the login page."
+            }, status=201)
+        else:
+            error_messages = []
+            for field, errors in form.errors.items():
+                for error in errors:
+                    error_messages.append(f"{field.capitalize()}: {error}")
+            return JsonResponse({
+                "status": "error",
+                "message": "Registration failed. Please correct the errors below.",
+                "errors": error_messages
+            }, status=400)
+    form = RegisterForm()
     context = {'form': form}
     return render(request, 'register.html', context)
 
@@ -151,22 +177,31 @@ def register(request):
 def login_user(request):
     if request.method == 'POST':
         form = LoginForm(data=request.POST)
-
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                response = HttpResponseRedirect(reverse("main:home_page"))
+                response_data = {
+                    "status": "success",
+                    "message": "Login successful!",
+                    "redirect_url": reverse("main:home_page")
+                }
+                response = JsonResponse(response_data, status=200)
                 response.set_cookie('last_login', str(datetime.datetime.now()))
                 return response
             else:
-                messages.error(request, 'Wrong username or password.')
-
-    else:
-        form = LoginForm()
-
+                return JsonResponse({
+                    "status": "error",
+                    "message": "Invalid username or password."
+                }, status=401)
+        else:
+            return JsonResponse({
+                "status": "error",
+                "message": "Please fill out all fields correctly."
+            }, status=400)
+    form = LoginForm()
     context = {'form': form}
     return render(request, 'login.html', context)
 
@@ -176,3 +211,50 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
+
+
+@login_required(login_url='/login')
+def create_product_ajax(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.user = request.user
+            product.save()
+            return JsonResponse({
+                "status": "success",
+                "message": "New product has been added successfully!"
+            }, status=201)
+        else:
+            return JsonResponse({
+                "status": "error",
+                "message": "There was an error with your input. Please check the form again.",
+                "errors": form.errors
+            }, status=400)
+    return JsonResponse({"status": "error", "message": "Invalid request method."}, status=400)
+
+
+@login_required(login_url='/login')
+def edit_product_ajax(request, id):
+    if request.method == 'POST':
+        product = get_object_or_404(Product, pk=id)
+        if product.user != request.user:
+            return JsonResponse({"status": "error", "message": "Access denied."}, status=403)
+        form = ProductForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({"status": "success", "message": "Product updated successfully!"}, status=200)
+        else:
+            return JsonResponse({"status": "error", "message": "Invalid data.", "errors": form.errors}, status=400)
+    return JsonResponse({"status": "error", "message": "Invalid request method."}, status=400)
+
+
+@login_required(login_url='/login')
+def delete_product_ajax(request, id):
+    if request.method == 'POST':
+        product = get_object_or_404(Product, pk=id)
+        if product.user != request.user:
+            return JsonResponse({"status": "error", "message": "Access denied."}, status=403)
+        product.delete()
+        return JsonResponse({"status": "success", "message": "Product deleted successfully!"}, status=200)
+    return JsonResponse({"status": "error", "message": "Invalid request method."}, status=400)
