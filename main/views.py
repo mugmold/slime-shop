@@ -277,6 +277,7 @@ def login_flutter(request):
                 "status": True,
                 "message": "Login berhasil!",
                 "username": username,
+                "id": user.id,
             }, status=200)
         else:
             return JsonResponse({
@@ -344,3 +345,50 @@ def create_product_flutter(request):
         return JsonResponse({"status": "success"}, status=200)
     else:
         return JsonResponse({"status": "error"}, status=401)
+
+
+@csrf_exempt
+def edit_product_flutter(request, id):
+    if request.method == 'POST':
+        try:
+            product = Product.objects.get(pk=id)
+        except Product.DoesNotExist:
+            return JsonResponse({"status": "error", "message": "Produk tidak ditemukan"}, status=404)
+
+        if product.user != request.user:
+            return JsonResponse({"status": "error", "message": "Tidak punya izin"}, status=403)
+
+        data = json.loads(request.body)
+
+        product.name = data.get("name", product.name)
+        product.price = int(data.get("price", product.price))
+        product.stock = int(data.get("stock", product.stock))
+        product.description = data.get("description", product.description)
+        product.category = data.get("category", product.category)
+        product.is_featured = data.get("is_featured", product.is_featured)
+
+        if "thumbnail" in data:
+            product.thumbnail = data["thumbnail"]
+
+        product.save()
+
+        return JsonResponse({"status": "success", "message": "Produk berhasil diupdate!"}, status=200)
+
+    return JsonResponse({"status": "error", "message": "Method not allowed"}, status=405)
+
+
+@csrf_exempt
+def delete_product_flutter(request, id):
+    if request.method == 'POST':
+        try:
+            product = Product.objects.get(pk=id)
+        except Product.DoesNotExist:
+            return JsonResponse({"status": "error", "message": "Produk tidak ditemukan"}, status=404)
+
+        if product.user != request.user:
+            return JsonResponse({"status": "error", "message": "Tidak punya izin"}, status=403)
+
+        product.delete()
+        return JsonResponse({"status": "success", "message": "Produk berhasil dihapus!"}, status=200)
+
+    return JsonResponse({"status": "error", "message": "Method not allowed"}, status=405)
