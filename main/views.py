@@ -12,6 +12,8 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
 from django.http import JsonResponse
+import json
+from django.views.decorators.csrf import csrf_exempt
 
 
 @login_required(login_url='/login')
@@ -258,3 +260,65 @@ def delete_product_ajax(request, id):
         product.delete()
         return JsonResponse({"status": "success", "message": "Product deleted successfully!"}, status=200)
     return JsonResponse({"status": "error", "message": "Invalid request method."}, status=400)
+
+
+@csrf_exempt
+def login_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return JsonResponse({
+                "status": True,
+                "message": "Login berhasil!",
+                "username": username,
+            }, status=200)
+        else:
+            return JsonResponse({
+                "status": False,
+                "message": "Username atau password salah."
+            }, status=401)
+    return JsonResponse({"status": False, "message": "Method not allowed"}, status=405)
+
+
+@csrf_exempt
+def register_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+        # Buat form secara manual atau gunakan UserCreationForm jika ingin validasi standar
+        # Di sini kita buat user manual untuk simplisitas API
+        username = data.get('username')
+        password = data.get('password')
+
+        if not username or not password:
+            return JsonResponse({"status": False, "message": "Data tidak lengkap"}, status=400)
+
+        try:
+            # Cek jika user sudah ada
+            from django.contrib.auth.models import User
+            if User.objects.filter(username=username).exists():
+                return JsonResponse({"status": False, "message": "Username sudah digunakan"}, status=409)
+
+            user = User.objects.create_user(
+                username=username, password=password)
+            user.save()
+            return JsonResponse({"status": True, "message": "Akun berhasil dibuat!"}, status=201)
+        except Exception as e:
+            return JsonResponse({"status": False, "message": str(e)}, status=500)
+
+    return JsonResponse({"status": False, "message": "Method not allowed"}, status=405)
+
+
+@csrf_exempt
+def logout_flutter(request):
+    logout(request)
+    return JsonResponse({
+        "status": True,
+        "message": "Logout berhasil!"
+    }, status=200)

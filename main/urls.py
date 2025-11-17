@@ -1,5 +1,5 @@
 from django.urls import path
-from main.views import home_page, show_xml, show_json, show_xml_by_id, show_json_by_id, create_product, show_product, register, login_user, logout_user, edit_product, delete_product, create_product_ajax, edit_product_ajax, delete_product_ajax
+from main.views import home_page, show_xml, show_json, show_xml_by_id, show_json_by_id, create_product, show_product, register, login_user, logout_user, edit_product, delete_product, create_product_ajax, edit_product_ajax, delete_product_ajax, login_flutter, logout_flutter, register_flutter
 
 app_name = 'main'
 
@@ -21,4 +21,7 @@ urlpatterns = [
     path('register/', register, name='register'),
     path('login/', login_user, name='login'),
     path('logout/', logout_user, name='logout'),
+    path('auth/login/', login_flutter, name='login_flutter'),
+    path('auth/register/', register_flutter, name='register_flutter'),
+    path('auth/logout/', logout_flutter, name='logout_flutter'),
 ]
